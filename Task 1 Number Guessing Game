@@ -1,0 +1,55 @@
+import java.util.*;
+public class NumberGame {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+
+        int min = 1;
+        int max = 100;
+        int maximumAttempts = 5; 
+        int totalAttempts = 0; 
+        int roundsWon = 0; 
+
+        boolean playAgain = true;
+        while (playAgain) {
+            int secretNumber = random.nextInt(max - min + 1) + min;
+            int attempts = 0;
+            boolean guessed = false;
+
+            System.out.println("\nWelcome to the Number Guessing Game!");
+            System.out.println("I'm thinking of a number between " + min + " and " + max + "." + "Can you guess it.");
+
+            while (attempts < maximumAttempts) {
+                System.out.print("Enter your guess (" + min + "-" + max + "): ");
+                int guess = sc.nextInt();
+                attempts++;
+
+                if (guess < secretNumber) {
+                    System.out.println("Too low! Try again.");
+                } else if (guess > secretNumber) {
+                    System.out.println("Too high! Try again.");
+                } else {
+                    guessed = true;
+                    break;
+                }
+            }
+            if (guessed) {
+                System.out.println("Congrats! You guessed the number " + secretNumber + " in " + attempts + " attempts.");
+                roundsWon++;
+            } else {
+                System.out.println("Sorry, you've used all your attempts. The number was " + secretNumber + ".");
+            }
+            totalAttempts += attempts;
+            System.out.print("\nDo you want to play again? (yes/no): ");
+            String playAgainInput = sc.next(); 
+            if (!playAgainInput.equalsIgnoreCase("yes")) {
+                playAgain = false; 
+            }
+        }
+        System.out.println("\nGame Over! You played " + roundsWon + " rounds.");
+        System.out.println("Total score: " + roundsWon + " rounds won out of " + totalAttempts + " attempts.");
+        System.out.println("Thanks for playing!");
+        sc.close();
+    }
+}
